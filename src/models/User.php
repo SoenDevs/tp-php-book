@@ -1,5 +1,5 @@
 <?php
-require_once 'models/Database.php';
+require_once "models/Database.php";
 
 /**
  * Get user by id
@@ -8,14 +8,14 @@ require_once 'models/Database.php';
  */
 function getUser($id)
 {
-	$db = connect();
+    $db = connect();
 
-	$sql = "SELECT * FROM users WHERE `id` :id";
-	$queryExecute = $db->prepare($sql);
-	$queryExecute->bindValue(':id', $id, PDO::PARAM_INT);
+    $sql = "SELECT * FROM users WHERE `id` = :id";
+    $queryExecute = $db->prepare($sql);
+    $queryExecute->bindValue(":id", $id, PDO::PARAM_INT);
 
-	$queryExecute->execute();
-	return $queryExecute->fetch(PDO::FETCH_OBJ);
+    $queryExecute->execute();
+    return $queryExecute->fetch(PDO::FETCH_OBJ);
 }
 
 /**
@@ -25,14 +25,14 @@ function getUser($id)
  */
 function getUserByEmail($email)
 {
-	$db = connect();
+    $db = connect();
 
-	$sql = "SELECT * FROM users WHERE `email` = :email";
-	$queryExecute = $db->prepare($sql);
-	$queryExecute->bindValue(':email', $email, PDO::PARAM_STR);
+    $sql = "SELECT * FROM users WHERE `email` = :email";
+    $queryExecute = $db->prepare($sql);
+    $queryExecute->bindValue(":email", $email, PDO::PARAM_STR);
 
-	$queryExecute->execute();
-	return $queryExecute->fetch(PDO::FETCH_OBJ);
+    $queryExecute->execute();
+    return $queryExecute->fetch(PDO::FETCH_OBJ);
 }
 
 /**
@@ -45,16 +45,17 @@ function getUserByEmail($email)
  */
 function createUser($firstname, $lastname, $email, $password)
 {
-	$db = connect();
+    $db = connect();
 
-	$sql = "INSERT INTO users (firstname, lastname, email, password) VALUES (:firstname, :lastname, :email, :password)";
-	$queryExecute = $db->prepare($sql);
-	$queryExecute->bindValue(':firstname', $firstname, PDO::PARAM_STR);
-	$queryExecute->bindValue(':lastname', $lastname, PDO::PARAM_STR);
-	$queryExecute->bindValue(':email', $email, PDO::PARAM_STR);
-	$queryExecute->bindValue(':password', $password, PDO::PARAM_STR);
+    $sql =
+        "INSERT INTO users (firstname, lastname, email, password) VALUES (:firstname, :lastname, :email, :password)";
+    $queryExecute = $db->prepare($sql);
+    $queryExecute->bindValue(":firstname", $firstname, PDO::PARAM_STR);
+    $queryExecute->bindValue(":lastname", $lastname, PDO::PARAM_STR);
+    $queryExecute->bindValue(":email", $email, PDO::PARAM_STR);
+    $queryExecute->bindValue(":password", $password, PDO::PARAM_STR);
 
-	return $queryExecute->execute();
+    return $queryExecute->execute();
 }
 
 /**
@@ -64,11 +65,11 @@ function createUser($firstname, $lastname, $email, $password)
  */
 function deleteUser($id)
 {
-	$db = connect();
+    $db = connect();
 
-	$sql = "DELETE FROM users WHERE `id` = :id";
-	$queryExecute = $db->prepare($sql);
-	$queryExecute->bindValue(':id', $id, PDO::PARAM_INT);
+    $sql = "DELETE FROM users WHERE `id` = :id";
+    $queryExecute = $db->prepare($sql);
+    $queryExecute->bindValue(":id", $id, PDO::PARAM_INT);
 
-	return $queryExecute->execute();
+    return $queryExecute->execute();
 }
